@@ -1,0 +1,21 @@
+spring:
+   application:
+      name:Neo4j_Demo
+   neo4j:
+      uri: bolt://localhost:7687
+      authentication:
+         username: neo4j
+         password: password
+
+
+devtools:
+   restart:
+      enabled: true
+   livereload:
+      enabled: true
+
+logging:
+   level:
+      com.example: DEBUG
+      org.springframework.security: DEBUG
+      org.neo4j.driver: DEBUG
