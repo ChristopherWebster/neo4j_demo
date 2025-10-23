@@ -26,7 +26,6 @@ class PersistenceTest {
     {
 
         /* A quick test suite to test the persistence process */
-        ChristopherWebster
 
         /* Build a collection of Recipe Steps called 'steps'  */
         StepEntity step1 = new StepEntity("Chop the onions", 1);
