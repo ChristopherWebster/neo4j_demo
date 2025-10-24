@@ -57,9 +57,6 @@ class PersistenceTest {
 
         // Read back the recipe from the database and validate the contents
         RecipeEntity read_recipe = recipeService.findById(recipeId);
-        assert(read_recipe.getRecipeId() != null);
-        assert(read_recipe.getIngredients().iterator().next().getIngredient().getName().equals(oil.getName()));
-        assert(read_recipe.getIngredients().iterator().next().getQuantity() == 30);
 
         // Let's see some output
         System.out.println("Read Recipe has ingredients["+read_recipe.getIngredients().size()+"] ");
@@ -67,9 +64,14 @@ class PersistenceTest {
         System.out.println("Ingredients: " + read_recipe.getIngredients().iterator().next().toString());
         System.out.println("Now Delete Recipe ID: " + read_recipe.getRecipeId());
 
-        //finally delete the recipe
-        //recipeService.deleteById(read_recipe.getRecipeId());
-        //recipeService.delete(read_recipe);
-        //assert(recipeService.recipeCount() == 0);
+        assert(read_recipe.getRecipeId() != null);
+        assert(read_recipe.getIngredients().iterator().next().getIngredient().getName().equals(oil.getName()));
+        assert(read_recipe.getIngredients().iterator().next().getQuantity() == 30);
+
+        //finally delete the recipe and it's steps and ingredients from the database
+        recipeService.deleteById(read_recipe.getRecipeId());
+
+        //validate the deletion
+        assert(recipeService.recipeCount() == 0);
     }
 }
