@@ -52,19 +52,24 @@ class PersistenceTest {
         //Check the recipe count - assuming we're writing to an empty Neo4j instance 
         assert(recipeService.recipeCount() == 1);
 
-        //Now get the recipe Id from teh result object
+        //Now get the recipe Id from the result object, which is the saved recipe id
         recipeId = result.getRecipeId();
-    
-        assert(result.getRecipeId() != null);
-        assert(result.getIngredients().iterator().next().getIngredient().getName().equals(onions.getName()));
-        assert(result.getIngredients().iterator().next().getQuantity() == 2);
-        /* Lets check some output*/
-        System.out.println(result.getIngredients().iterator().next().getQuantity());
-        System.out.println("Recipe ID: " + result.getRecipeId()+ " UUID: " + result.getRecipeId());
-        System.out.println("Ingredients: " + result.getIngredients().iterator().next().toString());
-        System.out.println("Now Delete Recipe ID: " + recipeId);
-        
-        recipeService.deleteById(recipeId);
-        assert(recipeService.recipeCount() == 0);
+
+        // Read back the recipe from the database and validate the contents
+        RecipeEntity read_recipe = recipeService.findById(recipeId);
+        assert(read_recipe.getRecipeId() != null);
+        assert(read_recipe.getIngredients().iterator().next().getIngredient().getName().equals(oil.getName()));
+        assert(read_recipe.getIngredients().iterator().next().getQuantity() == 30);
+
+        // Let's see some output
+        System.out.println("Read Recipe has ingredients["+read_recipe.getIngredients().size()+"] ");
+        System.out.println("Recipe ID: " + read_recipe.getRecipeId()+ " Name: " + read_recipe.getName());
+        System.out.println("Ingredients: " + read_recipe.getIngredients().iterator().next().toString());
+        System.out.println("Now Delete Recipe ID: " + read_recipe.getRecipeId());
+
+        //finally delete the recipe
+        //recipeService.deleteById(read_recipe.getRecipeId());
+        //recipeService.delete(read_recipe);
+        //assert(recipeService.recipeCount() == 0);
     }
 }

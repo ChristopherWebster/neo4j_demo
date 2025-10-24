@@ -21,11 +21,17 @@ public class RecipeService {
         return recipeRepository.save(recipe);
     }
 
+    public void delete(RecipeEntity recipe) {recipeRepository.delete(recipe);}
+
     public void deleteById(String recipeId) {
         recipeRepository.deleteByRecipeId(recipeId);
     }
 
     public long recipeCount() {
         return recipeRepository.count();
+    }
+
+    public RecipeEntity findById(String recipeId) {
+        return recipeRepository.findById(recipeId).orElse(null);
     }
 }
